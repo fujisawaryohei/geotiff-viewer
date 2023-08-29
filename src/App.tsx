@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState }from 'react';
+import useFileToBuffer from './hooks/useFileToBuffer';
+import "./App.css";
+
 
 function App() {
+  const [file, setFile] = useState<File | null>(null);
+  const [arrayBuffer, error] = useFileToBuffer(file);
+  
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event.target.files) {
+      setFile(event.target.files[0]);
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input type="file" onChange={handleFileChange} />
     </div>
-  );
+  )
 }
 
 export default App;
